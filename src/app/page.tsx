@@ -199,15 +199,17 @@ export default function Home() {
                 title: 'Nestfy',
                 category: 'E-commerce Platform',
                 description: 'Uma experiência de e-commerce de luxo construída com Next.js e design minimalista.',
-                image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop',
-                link: 'https://nestfy-1.vercel.app/'
+                image: '/nestfy-image.jpeg',
+                link: 'https://nestfy-1.vercel.app/',
+                objectPosition: 'center'
               },
               {
                 title: 'Matheus Portfolio',
                 category: 'Personal Brand',
                 description: 'Desenvolvimento de identidade digital para profissional de psicologia.',
-                image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1000&auto=format&fit=crop',
-                link: 'https://portif-lio-matheus.vercel.app/'
+                image: '/matheus-portifolio-image.jpeg',
+                link: 'https://portif-lio-matheus.vercel.app/',
+                objectPosition: 'top'
               }
             ].map((project, index) => (
               <Grid size={{ xs: 12, md: 6 }} key={index}>
@@ -229,7 +231,7 @@ export default function Home() {
                       '&:hover .project-title': { color: 'primary.main' }
                     }}
                   >
-                    <Box sx={{ overflow: 'hidden', mb: 3, position: 'relative', aspectRatio: '16/10', borderRadius: '24px' }}>
+                    <Box sx={{ overflow: 'hidden', mb: 3, position: 'relative', aspectRatio: '16/11', borderRadius: '24px' }}>
                       <Box
                         className="project-img"
                         sx={{
@@ -243,7 +245,7 @@ export default function Home() {
                           src={project.image}
                           alt={project.title}
                           fill
-                          style={{ objectFit: 'cover' }}
+                          style={{ objectFit: 'cover', objectPosition: project.objectPosition || 'center' }}
                         />
                       </Box>
                     </Box>
