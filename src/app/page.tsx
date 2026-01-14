@@ -181,6 +181,122 @@ export default function Home() {
         </Container>
       </Box>
 
+      {/* ABOUT SECTION */}
+      <Box id="sobre" sx={{ py: 20, bgcolor: 'background.paper' }}>
+        <Container maxWidth="lg">
+          <Grid container spacing={8} alignItems="center">
+            <Grid size={{ xs: 12, md: 6 }}>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <Typography variant="overline" sx={{ color: 'primary.main', fontWeight: 600, letterSpacing: 4 }}>
+                  Sobre Mim
+                </Typography>
+                <Typography variant="h2" sx={{ fontWeight: 800, mt: 1, mb: 4, fontSize: { xs: '2.5rem', md: '3.5rem' } }}>
+                  Transformando ideias em <Box component="span" sx={{ color: 'primary.main' }}>Realidade Digital</Box>
+                </Typography>
+                
+                <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3, lineHeight: 1.8, fontSize: '1.1rem' }}>
+                  Sou um <strong>Desenvolvedor Full Stack</strong> apaixonado por tecnologia e design, com sólida base em <strong>UI & UX</strong> e <strong>Modelagem de Dados</strong>. Minha jornada começou aos 15 anos, movido pela curiosidade em transformar conceitos em experiências funcionais.
+                </Typography>
+                
+                <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3, lineHeight: 1.8, fontSize: '1.1rem' }}>
+                  Com formação técnica pelo <strong>Senac</strong> e participações estratégicas em <strong>BOOTCAMPs da DIO</strong>, especializei-me no ecossistema JavaScript moderno. Domino ferramentas poderosas como <strong>React Native</strong> para mobile, e um conjunto robusto de tecnologias web incluindo <strong>Redux Toolkit, Redux Persist, Zod, React Hook Form</strong> e <strong>React Query</strong>.
+                </Typography>
+
+                <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4, lineHeight: 1.8, fontSize: '1.1rem' }}>
+                  Utilizo <strong>Next.js</strong> no front-end e <strong>NestJS</strong> no back-end para construir aplicações escaláveis e performáticas. Tenho experiência com bancos de dados <strong>MySQL, PostgreSQL</strong> e <strong>MongoDB</strong>, além de possuir <strong>inglês avançado</strong>, o que me permite colaborar em ambientes globais.
+                </Typography>
+
+                <Stack direction="row" spacing={3}>
+                  <Box>
+                    <Typography variant="h4" sx={{ color: 'primary.main', fontWeight: 800 }}>+2</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>Anos de Estudo</Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant="h4" sx={{ color: 'primary.main', fontWeight: 800 }}>10+</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>Projetos Criados</Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant="h4" sx={{ color: 'primary.main', fontWeight: 800 }}>C1</Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>Inglês Avançado</Typography>
+                  </Box>
+                </Stack>
+              </motion.div>
+            </Grid>
+
+            <Grid size={{ xs: 12, md: 6 }}>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <Box sx={{ 
+                  p: 4, 
+                  border: '1px solid', 
+                  borderColor: 'divider', 
+                  borderRadius: '24px',
+                  bgcolor: 'background.default',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Sparkles size={20} color="#D4AF37" /> Tech Stack
+                  </Typography>
+                  
+                  <Grid container spacing={2}>
+                    {[
+                      'React.js', 'Next.js', 'React Native', 'NestJS', 
+                      'Node.js', 'Redux Toolkit', 'React Query', 'Zod',
+                      'MySQL', 'PostgreSQL', 'MongoDB', 'UI/UX Design'
+                    ].map((skill) => (
+                      <Grid size={{ xs: 6, sm: 4 }} key={skill}>
+                        <Box sx={{ 
+                          p: 1.5, 
+                          border: '1px solid', 
+                          borderColor: 'divider', 
+                          borderRadius: '8px',
+                          textAlign: 'center',
+                          fontSize: '0.85rem',
+                          fontWeight: 500,
+                          transition: '0.3s',
+                          '&:hover': {
+                            borderColor: 'primary.main',
+                            color: 'primary.main',
+                            transform: 'translateY(-3px)'
+                          }
+                        }}>
+                          {skill}
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+
+                  <Box sx={{ mt: 4 }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 2 }}>Educação & Certificações</Typography>
+                    <Stack spacing={2}>
+                      <Typography variant="body2" color="text.secondary">
+                        • <strong>Senac:</strong> Programação Web & Lógica
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        • <strong>DIO:</strong> Bootcamps Full Stack
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        • <strong>Sebrae:</strong> Marketing & Relacionamento
+                      </Typography>
+                    </Stack>
+                  </Box>
+                </Box>
+              </motion.div>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
       {/* PROJECTS SECTION */}
       <Box id="projetos" sx={{ py: 20, borderTop: '1px solid', borderColor: 'divider' }}>
         <Container maxWidth="lg">
