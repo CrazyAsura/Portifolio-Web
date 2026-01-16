@@ -312,6 +312,14 @@ export default function Home() {
           <Grid container spacing={6}>
             {[
               {
+                title: '+Contábil',
+                category: 'Fintech & Accounting',
+                description: 'Solução inteligente que une tecnologia e expertise humana para transformar a gestão financeira empresarial e pessoal.',
+                image: '/+contabil-image.jpeg',
+                link: 'https://contabil-six.vercel.app/',
+                objectPosition: 'center'
+              },
+              {
                 title: 'Nestfy',
                 category: 'E-commerce Platform',
                 description: 'Uma experiência de e-commerce de luxo construída com Next.js e design minimalista.',
