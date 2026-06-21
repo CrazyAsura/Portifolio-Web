@@ -36,7 +36,7 @@ export default function AboutSection() {
       component="section"
       sx={{ 
         py: { xs: 15, md: 22 }, 
-        bgcolor: 'background.paper',
+        background: 'linear-gradient(180deg, rgba(7,7,8,0) 0%, rgba(212,175,55,0.03) 100%)',
         borderTop: '1px solid',
         borderColor: 'divider',
         position: 'relative',
@@ -173,7 +173,7 @@ export default function AboutSection() {
                                 p: 1.5, 
                                 border: '1px solid', 
                                 borderColor: 'divider', 
-                                background: 'rgba(255, 255, 255, 0.02)',
+                                background: 'rgba(212, 175, 55, 0.03)',
                                 textAlign: 'left',
                                 fontSize: '0.85rem',
                                 fontWeight: 500,
