@@ -14,9 +14,10 @@ const Footer = () => {
         py: 8,
         px: 2,
         mt: 'auto',
-        backgroundColor: 'background.default',
+        backgroundColor: 'background.paper',
         borderTop: '1px solid',
         borderColor: 'divider',
+        transition: 'background-color 0.4s ease, border-color 0.4s ease',
       }}
     >
       <Container maxWidth="lg">
@@ -30,6 +31,7 @@ const Footer = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
             <Typography 
               variant="h6" 
@@ -37,28 +39,29 @@ const Footer = () => {
                 fontWeight: 900, 
                 letterSpacing: 2, 
                 textTransform: 'uppercase',
-                mb: 1,
+                mb: 1.5,
                 textAlign: { xs: 'center', md: 'left' }
               }}
             >
               LEON MENDONÇA <Box component="span" sx={{ color: 'primary.main' }}>TRINDADE</Box>
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 350, textAlign: { xs: 'center', md: 'left' } }}>
-              Transformando ideias complexas em experiências digitais elegantes e de alto impacto. Especialista em Full Stack e UI/UX.
+            <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 380, textAlign: { xs: 'center', md: 'left' }, lineHeight: 1.7 }}>
+              Desenvolvendo experiências digitais elegantes de alta performance com foco em arquitetura limpa e design centrado no usuário.
             </Typography>
           </motion.div>
 
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={1.5}>
             {[
-              { icon: <Github size={22} />, href: 'https://github.com/CrazyAsura', label: 'Github' },
-              { icon: <Linkedin size={22} />, href: 'https://www.linkedin.com/in/leonmendoncatrindade/', label: 'LinkedIn' },
-              { icon: <Phone size={22} />, href: 'https://wa.me/5579999576753', label: 'WhatsApp' },
-              { icon: <Mail size={22} />, href: 'mailto:leonmendonca@example.com', label: 'Email' },
+              { icon: <Github size={20} />, href: 'https://github.com/CrazyAsura', label: 'Github' },
+              { icon: <Linkedin size={20} />, href: 'https://www.linkedin.com/in/leonmendoncatrindade/', label: 'LinkedIn' },
+              { icon: <Phone size={20} />, href: 'https://wa.me/5579999576753', label: 'WhatsApp' },
+              { icon: <Mail size={20} />, href: 'mailto:leoncdzt@gmail.com', label: 'Email' },
             ].map((social, index) => (
               <motion.div 
                 key={index}
-                whileHover={{ y: -5 }} 
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ y: -4 }} 
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
               >
                 <IconButton 
                   color="primary" 
@@ -66,14 +69,18 @@ const Footer = () => {
                   component="a" 
                   href={social.href} 
                   target="_blank"
+                  rel="noopener noreferrer"
                   sx={{ 
                     border: '1px solid',
                     borderColor: 'divider',
-                    borderRadius: 0,
+                    borderRadius: 0, // Straight modern border to match theme
                     p: 1.5,
+                    color: 'text.primary',
+                    transition: 'all 0.3s ease',
                     '&:hover': {
                       borderColor: 'primary.main',
-                      bgcolor: 'transparent'
+                      bgcolor: 'primary.main',
+                      color: 'background.default'
                     }
                   }}
                 >
@@ -84,13 +91,13 @@ const Footer = () => {
           </Stack>
         </Stack>
         
-        <Divider sx={{ my: 4, opacity: 0.5 }} />
+        <Divider sx={{ my: 5, opacity: 0.5 }} />
         
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-          <Typography variant="caption" color="text.secondary" sx={{ letterSpacing: 1, textAlign: 'center' }}>
+          <Typography variant="caption" color="text.secondary" sx={{ letterSpacing: 1.5, textAlign: 'center', fontWeight: 500 }}>
             © {currentYear} LEON MENDONÇA TRINDADE. TODOS OS DIREITOS RESERVADOS.
           </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ letterSpacing: 1 }}>
+          <Typography variant="caption" color="text.secondary" sx={{ letterSpacing: 2, fontWeight: 600, color: 'primary.main' }}>
             DESIGNED FOR EXCELLENCE
           </Typography>
         </Box>
