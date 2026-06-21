@@ -7,12 +7,25 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from '@/redux/store';
 import { useAppSelector } from '@/redux/hooks/reduxHooks';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 
 function ThemeWrapper({ children }: { children: React.ReactNode }) {
   const mode = useAppSelector((state) => state.theme.mode);
   
   const theme = useMemo(() => createTheme(getThemeOptions(mode)), [mode]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const root = window.document.documentElement;
+      if (mode === 'dark') {
+        root.classList.add('dark');
+        root.style.colorScheme = 'dark';
+      } else {
+        root.classList.remove('dark');
+        root.style.colorScheme = 'light';
+      }
+    }
+  }, [mode]);
 
   return (
     <ThemeProvider theme={theme}>
