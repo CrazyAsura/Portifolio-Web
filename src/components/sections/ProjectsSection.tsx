@@ -1,274 +1,144 @@
 'use client';
-import React from 'react';
-import { Box, Container, Typography, Stack, Grid } from '@mui/material';
-import { motion } from 'framer-motion';
-import { ExternalLink, Code } from 'lucide-react';
+
+import { useState } from 'react';
 import Image from 'next/image';
-import { Project } from '@/core/domain/types';
+import { ArrowUpRight, Maximize2 } from 'lucide-react';
+import { motion } from 'motion/react';
+import type { Project } from '@/core/domain/types';
+import { Badge } from '@/components/ui/badge';
+import Reveal from '@/components/effects/Reveal';
+import ImageZoomModal from '@/components/effects/ImageZoomModal';
 
-interface ProjectsSectionProps {
-  projects: Project[];
-}
-
-export default function ProjectsSection({ projects }: ProjectsSectionProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { ease: [0.16, 1, 0.3, 1] as const, duration: 1.0 } 
-    }
-  };
+export default function ProjectsSection({ projects }: { projects: Project[] }) {
+  const [selectedImage, setSelectedImage] = useState<{
+    src: string;
+    alt: string;
+    title: string;
+    subtitle: string;
+  } | null>(null);
 
   return (
-    <Box 
-      id="projetos" 
-      component="section"
-      sx={{ 
-        py: { xs: 15, md: 22 }, 
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      {/* Subtle Background Glow */}
-      <Box 
-        className="ambient-orb"
-        sx={{ 
-          top: '40%', 
-          right: '10%', 
-          width: '350px', 
-          height: '350px', 
-          background: 'radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%)',
-          animationDuration: '18s'
-        }} 
-      />
+    <>
+      <section id="projetos" aria-labelledby="projects-title" className="section-shell py-14 md:py-24">
+        <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+          <Reveal delay={0.05}>
+            <p className="eyebrow mb-5">
+              <span className="text-primary">01 /</span> Trabalhos selecionados
+            </p>
+            <h2 id="projects-title" className="section-heading">
+              Ideias que viraram<br />
+              <span className="serif-accent">experiência.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="max-w-[250px] text-sm leading-relaxed text-muted-foreground">
+              Produtos, interfaces e sistemas.<br />
+              Uma seleção do que venho construindo.
+            </p>
+          </Reveal>
+        </div>
 
-      <Container maxWidth="lg">
-        {/* Section Header */}
-        <Box sx={{ mb: { xs: 8, md: 12 }, textAlign: 'left' }}>
-          <Typography 
-            variant="overline" 
-            sx={{ 
-              color: 'primary.main', 
-              fontWeight: 600, 
-              letterSpacing: 4,
-              display: 'block',
-              mb: 1
-            }}
-          >
-            Portfolio
-          </Typography>
-          <Typography 
-            variant="h2" 
-            sx={{ 
-              fontWeight: 800, 
-              fontSize: { xs: '2.2rem', md: '3.2rem' } 
-            }}
-          >
-            Projetos <Box component="span" sx={{ color: 'primary.main' }}>Recentes</Box>
-          </Typography>
-        </Box>
+        <div className="grid gap-x-7 gap-y-12 md:grid-cols-2">
+          {projects.map((project, index) => (
+            <Reveal
+              key={project.id}
+              delay={0.1 + (index % 2) * 0.15}
+              className={index === 0 ? 'md:col-span-2' : ''}
+            >
+              <div className="group rounded-[28px]">
+                <div
+                  className={`relative overflow-hidden rounded-[24px] border border-border bg-card shadow-sm transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-lg ${
+                    index === 0 ? 'aspect-[1.35] md:aspect-[2.25]' : 'aspect-[1.5]'
+                  }`}
+                >
+                  <Image
+                    src={project.image}
+                    alt={`Interface do projeto ${project.title}`}
+                    fill
+                    sizes={
+                      index === 0
+                        ? '(max-width: 767px) 90vw, 90vw'
+                        : '(max-width: 767px) 90vw, 45vw'
+                    }
+                    className="project-image object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    style={{ objectPosition: project.objectPosition || 'center' }}
+                  />
 
-        {/* Projects Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          <Grid container spacing={5}>
-            {projects.map((project) => (
-              <Grid size={{ xs: 12, md: 6 }} key={project.id}>
-                <motion.div variants={cardVariants} style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <Box
-                    component="a"
+                  {/* Top-Right: External Project Link */}
+                  <motion.a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="glass-panel shimmer-container"
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: '100%',
-                      textDecoration: 'none',
-                      color: 'inherit',
-                      borderRadius: '24px',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.01)',
-                      '&:hover': {
-                        transform: 'translateY(-6px)',
-                        boxShadow: '0 15px 40px rgba(0, 0, 0, 0.1)',
-                        borderColor: 'primary.main',
-                      },
-                      '.dark &:hover': {
-                        boxShadow: '0 15px 40px rgba(212, 175, 55, 0.08)',
-                      }
-                    }}
+                    whileHover={{ scale: 1.1, rotate: 45 }}
+                    whileTap={{ scale: 0.94 }}
+                    aria-label={`Visitar ${project.title} (abre em nova aba)`}
+                    className="absolute right-4 top-4 z-10 flex size-11 items-center justify-center rounded-full border border-white/20 bg-black/65 text-white backdrop-blur-md transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
-                    {/* Image Wrapper */}
-                    <Box 
-                      sx={{ 
-                        overflow: 'hidden', 
-                        position: 'relative', 
-                        aspectRatio: '16/10',
-                        borderBottom: '1px solid',
-                        borderColor: 'divider',
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: '100%',
-                          height: '100%',
-                          transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-                          '&:hover': {
-                            transform: 'scale(1.05)',
-                          },
-                          '.shimmer-container:hover &': {
-                            transform: 'scale(1.05)',
-                          }
-                        }}
-                      >
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          style={{ 
-                            objectFit: 'cover', 
-                            objectPosition: project.objectPosition || 'center' 
-                          }}
-                        />
-                      </Box>
-                      
-                      {/* Category overlay badge */}
-                      <Box 
-                        sx={{ 
-                          position: 'absolute', 
-                          top: 16, 
-                          left: 16,
-                          bgcolor: 'rgba(7, 7, 8, 0.85)',
-                          backdropFilter: 'blur(8px)',
-                          color: 'primary.main',
-                          border: '1px solid rgba(212, 175, 55, 0.3)',
-                          fontSize: '0.65rem',
-                          fontWeight: 700,
-                          letterSpacing: 1.5,
-                          textTransform: 'uppercase',
-                          px: 2,
-                          py: 0.75,
-                          borderRadius: 0,
-                        }}
-                      >
-                        {project.category}
-                      </Box>
+                    <ArrowUpRight size={19} />
+                  </motion.a>
 
-                      {/* Icon link indicator on hover */}
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          bottom: 16,
-                          right: 16,
-                          width: 36,
-                          height: 36,
-                          borderRadius: 0,
-                          bgcolor: 'primary.main',
-                          color: 'background.default',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          opacity: 0,
-                          transform: 'scale(0.8) translateY(10px)',
-                          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                          '.shimmer-container:hover &': {
-                            opacity: 1,
-                            transform: 'scale(1) translateY(0)',
-                          }
-                        }}
-                      >
-                        <ExternalLink size={16} />
-                      </Box>
-                    </Box>
+                  {/* Top-Left: Zoom / Enlarge Button */}
+                  <motion.button
+                    type="button"
+                    onClick={() =>
+                      setSelectedImage({
+                        src: project.image,
+                        alt: `Interface do projeto ${project.title}`,
+                        title: project.title,
+                        subtitle: `0${index + 1} / ${project.category}`,
+                      })
+                    }
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.94 }}
+                    aria-label={`Ampliar imagem de ${project.title}`}
+                    className="absolute left-4 top-4 z-10 flex size-11 items-center justify-center rounded-full border border-white/20 bg-black/65 text-white opacity-80 backdrop-blur-md transition-all hover:opacity-100 hover:border-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  >
+                    <Maximize2 size={17} />
+                  </motion.button>
 
-                    {/* Content Box */}
-                    <Box sx={{ p: 4, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                      
-                      <Typography 
-                        variant="h4" 
-                        sx={{ 
-                          fontWeight: 800, 
-                          mb: 2, 
-                          fontSize: { xs: '1.4rem', md: '1.6rem' },
-                          transition: 'color 0.3s ease',
-                          '.shimmer-container:hover &': {
-                            color: 'primary.main',
-                          }
-                        }}
-                      >
-                        {project.title}
-                      </Typography>
+                  <span className="absolute bottom-4 left-4 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[10px] tracking-wider text-white backdrop-blur-md">
+                    0{index + 1} / {project.category}
+                  </span>
+                </div>
 
-                      <Typography 
-                        variant="body2" 
-                        sx={{ 
-                          color: 'text.secondary', 
-                          fontWeight: 300, 
-                          lineHeight: 1.7,
-                          mb: 4,
-                          flexGrow: 1
-                        }}
-                      >
-                        {project.description}
-                      </Typography>
+                <div className="mt-5 flex flex-wrap items-start justify-between gap-3">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+                  >
+                    <h3 className="text-2xl font-medium tracking-[-.04em] transition-colors group-hover:text-primary md:text-3xl">
+                      {project.title}
+                    </h3>
+                  </a>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map(tag => (
+                      <Badge key={tag} className="transition-colors group-hover:border-primary/30">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
 
-                      {/* Tags list */}
-                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ gap: 1 }}>
-                        {project.tags.map((tag) => (
-                          <Box
-                            key={tag}
-                            sx={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: 0.5,
-                              fontSize: '0.7rem',
-                              fontWeight: 600,
-                              color: 'text.secondary',
-                              border: '1px solid',
-                              borderColor: 'divider',
-                              px: 1.5,
-                              py: 0.5,
-                              borderRadius: 0,
-                              transition: 'all 0.3s ease',
-                              '&:hover': {
-                                borderColor: 'primary.main',
-                                color: 'primary.main',
-                              }
-                            }}
-                          >
-                            <Code size={10} />
-                            {tag}
-                          </Box>
-                        ))}
-                      </Stack>
-                    </Box>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                  {project.description}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
-                  </Box>
-                </motion.div>
-              </Grid>
-            ))}
-          </Grid>
-        </motion.div>
-      </Container>
-    </Box>
+      {/* Image Enlargement Modal */}
+      <ImageZoomModal
+        isOpen={Boolean(selectedImage)}
+        onClose={() => setSelectedImage(null)}
+        src={selectedImage?.src || ''}
+        alt={selectedImage?.alt || ''}
+        title={selectedImage?.title}
+        subtitle={selectedImage?.subtitle}
+      />
+    </>
   );
 }

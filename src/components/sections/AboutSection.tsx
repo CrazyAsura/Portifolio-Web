@@ -1,243 +1,116 @@
 'use client';
-import React from 'react';
-import { Box, Container, Typography, Stack, Grid } from '@mui/material';
-import { motion } from 'framer-motion';
-import { Sparkles, Code2, Database, Shield, GraduationCap, PenTool } from 'lucide-react';
+
+import { motion } from 'motion/react';
+import { Badge } from '@/components/ui/badge';
+import Reveal from '@/components/effects/Reveal';
+
+const categories = [
+  {
+    title: 'Frontend & Mobile',
+    skills: ['Next.js', 'Expo', 'React Query', 'Zod', 'React Hook Form', 'Redux Toolkit'],
+  },
+  {
+    title: 'Backend & Integrações',
+    skills: ['NestJS', 'JWT', 'WebSockets', 'Kafka', 'Redis', 'Argon2'],
+  },
+  {
+    title: 'Bancos de dados',
+    skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'SQL Server'],
+  },
+  {
+    title: 'Design & Diagramas',
+    skills: ['Figma', 'Framer', 'DBDiagram', 'Excalidraw'],
+  },
+];
+
+const stats = [
+  { value: '+2 anos', label: 'Estudo intensivo' },
+  { value: '10+', label: 'Projetos criados' },
+  { value: 'C1', label: 'Inglês avançado' },
+];
 
 export default function AboutSection() {
-  const transitionConfig = { ease: [0.16, 1, 0.3, 1] as const, duration: 1.0 };
-
-  const techCategories = [
-    {
-      title: 'Frontend & Mobile',
-      icon: <Code2 size={16} className="text-gold" />,
-      skills: ['Next.js', 'Expo', 'React Query', 'Zod', 'React Hook Form', 'Redux Toolkit']
-    },
-    {
-      title: 'Backend & Integrações',
-      icon: <Shield size={16} className="text-gold" />,
-      skills: ['NestJS', 'JWT', 'Websockets', 'Kafka', 'Redis', 'Argon2']
-    },
-    {
-      title: 'Bancos de Dados',
-      icon: <Database size={16} className="text-gold" />,
-      skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'SQL Server']
-    },
-    {
-      title: 'Design & UML Diagrams',
-      icon: <PenTool size={16} className="text-gold" />,
-      skills: ['Figma', 'Framer', 'DBDiagram', 'Excalidraw']
-    }
-  ];
-
   return (
-    <Box 
-      id="sobre" 
-      component="section"
-      sx={{ 
-        py: { xs: 15, md: 22 }, 
-        bgcolor: 'background.paper',
-        borderTop: '1px solid',
-        borderColor: 'divider',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      <Container maxWidth="lg">
-        <Grid container spacing={{ xs: 8, md: 10 }} alignItems="flex-start">
-          
-          {/* Left Column: Biography & Stats */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={transitionConfig}
-            >
-              <Typography 
-                variant="overline" 
-                sx={{ 
-                  color: 'primary.main', 
-                  fontWeight: 600, 
-                  letterSpacing: 4,
-                  display: 'block',
-                  mb: 1
-                }}
-              >
-                Sobre Mim
-              </Typography>
-              <Typography 
-                variant="h2" 
-                sx={{ 
-                  fontWeight: 800, 
-                  mb: 4, 
-                  fontSize: { xs: '2.2rem', md: '3.2rem' } 
-                }}
-              >
-                Transformando ideias em <Box component="span" sx={{ color: 'primary.main' }}>Realidade Digital</Box>
-              </Typography>
-              
-              <Stack spacing={3} sx={{ color: 'text.secondary', mb: 6 }}>
-                <Typography variant="body1" sx={{ lineHeight: 1.8, fontSize: '1.05rem' }}>
-                  Sou um <strong>Desenvolvedor Full Stack</strong> apaixonado por engenharia de software e design de interfaces, buscando sempre o equilíbrio perfeito entre estética e solidez estrutural. Minha paixão começou cedo, motivada pelo desejo de construir soluções inteligentes e impactantes.
-                </Typography>
-                
-                <Typography variant="body1" sx={{ lineHeight: 1.8, fontSize: '1.05rem' }}>
-                  Com formação técnica e profissionalizante pelo <strong>Senac</strong>, estruturei minha especialidade em torno do desenvolvimento de software de ponta a ponta, unindo raciocínio lógico apurado e design de sistemas moderno.
-                </Typography>
+    <section id="sobre" aria-labelledby="about-title" className="border-y border-border bg-card py-20 md:py-28">
+      <div className="section-shell grid gap-14 lg:grid-cols-2 lg:gap-24">
+        <div>
+          <Reveal delay={0.05}>
+            <p className="eyebrow mb-5">
+              <span className="text-primary">02 /</span> Sobre mim
+            </p>
+            <h2 id="about-title" className="section-heading">
+              Atenção ao detalhe.<br />
+              <span className="serif-accent">Visão do todo.</span>
+            </h2>
+          </Reveal>
 
-                <Typography variant="body1" sx={{ lineHeight: 1.8, fontSize: '1.05rem' }}>
-                  Tenho ampla experiência com ferramentas poderosas de gerenciamento de estado global e fluxos de dados reativos, além de dominar a modelagem estruturada e não-estruturada de bancos de dados. Meu foco principal está em escalabilidade de sistemas, tempo de resposta otimizado e interfaces responsivas de altíssima qualidade.
-                </Typography>
-              </Stack>
+          <Reveal delay={0.15}>
+            <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground">
+              <p>
+                Sou Leon, desenvolvedor full stack. Trabalho da interface à modelagem de dados, unindo raciocínio lógico e design de sistemas.
+              </p>
+              <p>
+                Meu foco está em sistemas escaláveis, respostas rápidas e interfaces que funcionam bem em qualquer tela. Gosto de entender o problema inteiro antes de escrever a primeira linha.
+              </p>
+            </div>
+          </Reveal>
 
-              {/* Statistics Grid */}
-              <Grid container spacing={3}>
-                {[
-                  { value: '+2 Anos', label: 'Estudo Intensivo' },
-                  { value: '10+', label: 'Projetos Criados' },
-                  { value: 'C1', label: 'Inglês Avançado' }
-                ].map((stat, idx) => (
-                  <Grid size={{ xs: 4 }} key={idx}>
-                    <Box sx={{ borderLeft: '2px solid', borderColor: 'primary.main', pl: 2 }}>
-                      <Typography variant="h4" sx={{ color: 'text.primary', fontWeight: 800, fontSize: { xs: '1.5rem', md: '2rem' } }}>
-                        {stat.value}
-                      </Typography>
-                      <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.5, display: 'block', mt: 0.5 }}>
-                        {stat.label}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-
-            </motion.div>
-          </Grid>
-
-          {/* Right Column: Tech Stack & Education */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={transitionConfig}
-            >
-              <Box 
-                className="glass-panel"
-                sx={{ 
-                  p: { xs: 4, md: 5 }, 
-                  borderRadius: '24px',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.02)',
-                  position: 'relative'
-                }}
-              >
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    fontWeight: 700, 
-                    mb: 4, 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: 1.5,
-                    letterSpacing: 0.5
-                  }}
+          <Reveal delay={0.25}>
+            <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-border pt-7">
+              {stats.map(({ value, label }) => (
+                <motion.div
+                  key={label}
+                  whileHover={{ y: -3 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                  className="rounded-xl p-2 transition-colors hover:bg-background/40"
                 >
-                  <Sparkles size={18} className="text-gold" /> Habilidades Técnicas
-                </Typography>
-                
-                {/* Tech Stack Groups */}
-                <Stack spacing={4}>
-                  {techCategories.map((cat, idx) => (
-                    <Box key={idx}>
-                      <Typography 
-                        variant="subtitle2" 
-                        color="text.secondary" 
-                        sx={{ 
-                          fontWeight: 600, 
-                          mb: 2, 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: 1,
-                          fontSize: '0.8rem',
-                          textTransform: 'uppercase',
-                          letterSpacing: 1
-                        }}
-                      >
-                        {cat.icon} {cat.title}
-                      </Typography>
-                      <Grid container spacing={1.5}>
-                        {cat.skills.map((skill) => (
-                          <Grid size={{ xs: 6, sm: 6 }} key={skill}>
-                            <Box 
-                              sx={{ 
-                                p: 1.5, 
-                                border: '1px solid', 
-                                borderColor: 'divider', 
-                                background: 'rgba(255, 255, 255, 0.02)',
-                                textAlign: 'left',
-                                fontSize: '0.85rem',
-                                fontWeight: 500,
-                                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                                cursor: 'default',
-                                '&:hover': {
-                                  borderColor: 'primary.main',
-                                  color: 'primary.main',
-                                  transform: 'translateX(4px)',
-                                  background: 'rgba(212, 175, 55, 0.02)'
-                                }
-                              }}
-                            >
-                              {skill}
-                            </Box>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Box>
-                  ))}
-                </Stack>
+                  <dt className="text-[10px] text-muted-foreground">{label}</dt>
+                  <dd className="mt-2 text-2xl tracking-tight md:text-3xl font-normal text-foreground">{value}</dd>
+                </motion.div>
+              ))}
+            </dl>
+          </Reveal>
 
-                {/* Education Block inside right card */}
-                <Box sx={{ mt: 5, pt: 4, borderTop: '1px solid', borderColor: 'divider' }}>
-                  <Typography 
-                    variant="subtitle2" 
-                    sx={{ 
-                      fontWeight: 700, 
-                      mb: 2.5,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 1,
-                      textTransform: 'uppercase',
-                      letterSpacing: 1,
-                      fontSize: '0.8rem'
-                    }}
-                  >
-                    <GraduationCap size={18} className="text-gold" /> Educação & Certificações
-                  </Typography>
-                  <Stack spacing={2.5}>
-                    {[
-                      { institution: 'Senac', course: 'Informática Básica' },
-                      { institution: 'Senac', course: 'Lógica de Programação' },
-                      { institution: 'Senac', course: 'Programador Web' },
-                      { institution: 'Senac', course: 'Programador Full Stack' }
-                    ].map((edu, index) => (
-                      <Box key={index}>
-                        <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary', fontSize: '0.9rem' }}>
-                          • {edu.institution}
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', pl: 2 }}>
-                          {edu.course}
-                        </Typography>
-                      </Box>
-                    ))}
-                  </Stack>
-                </Box>
-
-              </Box>
+          <Reveal delay={0.35}>
+            <motion.div
+              whileHover={{ y: -2 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+              className="mt-10 rounded-2xl border border-border bg-background/50 p-5 backdrop-blur-sm transition-colors hover:border-primary/40"
+            >
+              <p className="eyebrow mb-3">Formação / Senac</p>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Informática Básica · Lógica de Programação<br />
+                Programador Web · Programador Full Stack
+              </p>
             </motion.div>
-          </Grid>
-          
-        </Grid>
-      </Container>
-    </Box>
+          </Reveal>
+        </div>
+
+        <div className="space-y-7 lg:pt-2">
+          {categories.map((category, i) => (
+            <Reveal key={category.title} delay={0.1 + i * 0.1} className="border-b border-border pb-7">
+              <div className="mb-4 flex items-center gap-4">
+                <span className="font-mono text-[10px] text-primary">0{i + 1}</span>
+                <h3 className="text-lg tracking-tight font-medium">{category.title}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map(skill => (
+                  <motion.div
+                    key={skill}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                  >
+                    <Badge className="bg-background/70 px-3.5 py-1.5 transition-colors hover:border-primary/50 hover:text-foreground">
+                      {skill}
+                    </Badge>
+                  </motion.div>
+                ))}
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

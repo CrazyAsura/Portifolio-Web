@@ -1,50 +1,26 @@
 'use client';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { getThemeOptions } from '@/theme/theme';
+
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from '@/redux/store';
+import { MotionConfig } from 'motion/react';
+import { store, initializePersistence } from '@/redux/store';
 import { useAppSelector } from '@/redux/hooks/reduxHooks';
-import { useMemo, useEffect } from 'react';
+import { useEffect } from 'react';
+import CustomCursor from '@/components/effects/CustomCursor';
+import SmoothScroll from '@/components/effects/SmoothScroll';
 
 function ThemeWrapper({ children }: { children: React.ReactNode }) {
-  const mode = useAppSelector((state) => state.theme.mode);
-  
-  const theme = useMemo(() => createTheme(getThemeOptions(mode)), [mode]);
-
+  const mode = useAppSelector(state => state.theme.mode);
+  const rehydrated = useAppSelector(state => state._persist?.rehydrated);
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const root = window.document.documentElement;
-      if (mode === 'dark') {
-        root.classList.add('dark');
-        root.style.colorScheme = 'dark';
-      } else {
-        root.classList.remove('dark');
-        root.style.colorScheme = 'light';
-      }
-    }
-  }, [mode]);
-
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
-  );
+    if (!rehydrated) return;
+    const root = document.documentElement;
+    root.classList.toggle('dark', mode === 'dark');
+    root.style.colorScheme = mode;
+  }, [mode, rehydrated]);
+  return <MotionConfig reducedMotion="user">{children}<SmoothScroll /><CustomCursor /></MotionConfig>;
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <AppRouterCacheProvider>
-          <ThemeWrapper>
-            {children}
-          </ThemeWrapper>
-        </AppRouterCacheProvider>
-      </PersistGate>
-    </Provider>
-  );
+  useEffect(() => { initializePersistence(); }, []);
+  return <Provider store={store}><ThemeWrapper>{children}</ThemeWrapper></Provider>;
 }

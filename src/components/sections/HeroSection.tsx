@@ -1,272 +1,145 @@
 'use client';
-import React from 'react';
-import { Box, Container, Typography, Button, Stack, Grid } from '@mui/material';
-import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight } from 'lucide-react';
+
+import { useState } from 'react';
 import Image from 'next/image';
+import { ArrowDown, ArrowUpRight, Maximize2 } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Button } from '@/components/ui/button';
+import HeroAccent from '@/components/effects/HeroAccent';
+import Reveal from '@/components/effects/Reveal';
+import ImageZoomModal from '@/components/effects/ImageZoomModal';
 
-interface HeroSectionProps {
-  onContactClick: () => void;
-  onProjectsClick: () => void;
-}
-
-export default function HeroSection({ onContactClick, onProjectsClick }: HeroSectionProps) {
-  // Apple easeOutExpo curve
-  const transitionConfig = { ease: [0.16, 1, 0.3, 1] as const, duration: 1.2 };
+export default function HeroSection() {
+  const [isPhotoOpen, setIsPhotoOpen] = useState(false);
 
   return (
-    <Box 
-      component="section"
-      sx={{ 
-        minHeight: '100vh', 
-        display: 'flex', 
-        alignItems: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-        py: { xs: 12, md: 0 }
-      }}
-    >
-      {/* Cinematic Ambient Glow Orbs */}
-      <Box 
-        className="ambient-orb"
-        sx={{ 
-          top: '15%', 
-          left: '10%', 
-          width: { xs: '250px', md: '500px' }, 
-          height: { xs: '250px', md: '500px' }, 
-          background: 'radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%)',
-        }} 
-      />
-      <Box 
-        className="ambient-orb"
-        sx={{ 
-          bottom: '10%', 
-          right: '5%', 
-          width: { xs: '200px', md: '450px' }, 
-          height: { xs: '200px', md: '450px' }, 
-          background: 'radial-gradient(circle, rgba(255, 140, 0, 0.08) 0%, transparent 70%)',
-          animationDelay: '-5s',
-          animationDuration: '20s'
-        }} 
-      />
+    <>
+      <section id="inicio" aria-labelledby="hero-title" className="section-shell pb-12 pt-10 md:pb-16 md:pt-16">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+          <div className="relative z-10 py-2 lg:py-8">
+            <Reveal delay={0.05} direction="up">
+              <p className="eyebrow mb-8">
+                <span className="h-px w-8 bg-primary" />
+                Desenvolvedor full stack
+              </p>
+            </Reveal>
 
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        <Grid container spacing={{ xs: 6, md: 8 }} alignItems="center">
-          
-          {/* Text Content Column */}
-          <Grid size={{ xs: 12, md: 7 }} sx={{ order: { xs: 2, md: 1 } }}>
-            <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-              
-              {/* Overline Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...transitionConfig, delay: 0.1 }}
+            <Reveal delay={0.15} direction="up">
+              <h1
+                id="hero-title"
+                className="text-[clamp(3.5rem,6.7vw,6.25rem)] leading-[.98] font-normal tracking-[-.075em]"
               >
-                <Box
-                  sx={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 1.5,
-                    px: 2,
-                    py: 0.75,
-                    border: '1px solid',
-                    borderColor: 'primary.main',
-                    mb: 4,
-                    background: 'rgba(212, 175, 55, 0.04)',
-                    backdropFilter: 'blur(4px)',
-                  }}
-                >
-                  <Sparkles size={12} className="text-gold animate-pulse" />
-                  <Typography
-                    variant="overline"
-                    sx={{ 
-                      color: 'primary.main', 
-                      fontWeight: 600, 
-                      letterSpacing: 3,
-                      fontSize: '0.65rem',
-                      lineHeight: 1,
-                    }}
+                Leon Mendonça<br />
+                <span className="serif-accent">Trindade.</span>
+              </h1>
+            </Reveal>
+
+            <Reveal delay={0.25} direction="up">
+              <p className="mt-8 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
+                Do primeiro detalhe da interface<br className="hidden sm:block" /> à estrutura que faz tudo funcionar.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.35} direction="up">
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Button asChild>
+                  <motion.a
+                    href="#projetos"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    className="group"
                   >
-                    FULL STACK DEVELOPER
-                  </Typography>
-                </Box>
-              </motion.div>
-
-              {/* Headline */}
-              <motion.div
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...transitionConfig, delay: 0.2 }}
-              >
-                <Typography
-                  variant="h1"
-                  sx={{
-                    fontSize: { xs: '2.8rem', sm: '3.8rem', md: '5.2rem' },
-                    mb: 3,
-                    fontWeight: 900,
-                  }}
-                >
-                  Leon Mendonça <br />
-                  <Box component="span" sx={{ color: 'primary.main' }}>Trindade</Box>
-                </Typography>
-              </motion.div>
-
-              {/* Accent Line */}
-              <motion.div
-                initial={{ scaleX: 0, originX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ ...transitionConfig, delay: 0.4 }}
-              >
-                <Box 
-                  sx={{ 
-                    width: 70, 
-                    height: 2, 
-                    bgcolor: 'primary.main', 
-                    mb: 4, 
-                    mx: { xs: 'auto', md: 0 },
-                    background: 'linear-gradient(90deg, #D4AF37 0%, rgba(212,175,55,0.2) 100%)'
-                  }} 
-                />
-              </motion.div>
-
-              {/* Subheading */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...transitionConfig, delay: 0.3 }}
-              >
-                <Typography
-                  variant="h5"
-                  sx={{ 
-                    mb: 6, 
-                    maxWidth: '560px', 
-                    color: 'text.secondary',
-                    fontWeight: 300,
-                    lineHeight: 1.8,
-                    fontSize: { xs: '1.05rem', md: '1.2rem' },
-                    mx: { xs: 'auto', md: 0 }
-                  }}
-                >
-                  Desenvolvendo sistemas robustos de ponta a ponta. Arquitetura limpa, código escalável e interfaces cinematográficas pensadas para surpreender.
-                </Typography>
-              </motion.div>
-
-              {/* CTAs */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...transitionConfig, delay: 0.4 }}
-              >
-                <Stack 
-                  direction={{ xs: 'column', sm: 'row' }} 
-                  spacing={2} 
-                  justifyContent={{ xs: 'center', md: 'flex-start' }}
-                >
-                  <Button
-                    variant="contained"
-                    size="large"
-                    onClick={onProjectsClick}
-                    endIcon={<ArrowRight size={16} />}
-                    sx={{ 
-                      height: 54,
-                      px: 4.5,
-                      fontWeight: 700,
-                    }}
+                    Explorar projetos
+                    <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </motion.a>
+                </Button>
+                <Button asChild variant="outline">
+                  <motion.a
+                    href="#contatos"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   >
-                    Ver Projetos
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    onClick={onContactClick}
-                    sx={{ 
-                      height: 54,
-                      px: 4.5,
-                      fontWeight: 700,
-                    }}
-                  >
-                    Contato
-                  </Button>
-                </Stack>
-              </motion.div>
+                    Vamos conversar
+                  </motion.a>
+                </Button>
+              </div>
+            </Reveal>
 
-            </Box>
-          </Grid>
-          
-          {/* Profile Photo Column */}
-          <Grid size={{ xs: 12, md: 5 }} sx={{ order: { xs: 1, md: 2 } }}>
+            <Reveal delay={0.45} direction="up">
+              <div className="mt-14 flex items-center gap-5">
+                <span className="h-px w-9 bg-border" />
+                <p className="font-mono text-[10px] tracking-[.1em] text-muted-foreground">
+                  CÓDIGO COM INTENÇÃO. DESIGN COM CLAREZA.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.2} direction="left" className="relative mx-auto w-full max-w-[510px]">
             <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ ...transitionConfig, delay: 0.3 }}
+              onClick={() => setIsPhotoOpen(true)}
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+              className="portrait-surface group relative aspect-[.91] cursor-pointer overflow-hidden rounded-[32px] shadow-2xl transition-all duration-300 hover:shadow-primary/10 md:rounded-[40px]"
             >
-              <Box
-                sx={{
-                  position: 'relative',
-                  width: '100%',
-                  aspectRatio: '1/1',
-                  maxWidth: { xs: 260, sm: 320, md: 380 },
-                  mx: 'auto',
-                  borderRadius: '50%',
-                  p: 1.5,
-                  background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.4) 0%, rgba(212,175,55,0.02) 50%, rgba(0,0,0,0) 100%)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)',
-                  '.dark &': {
-                    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)',
-                  }
-                }}
-              >
-                <Box
-                  sx={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    background: 'background.paper',
-                    border: '1px solid',
-                    borderColor: 'divider',
-                    filter: 'grayscale(100%)',
-                    transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-                    '&:hover': { 
-                      filter: 'grayscale(0%)',
-                      transform: 'scale(1.02)'
-                    },
-                  }}
-                >
-                  <Image
-                    src="/profile-portifolio.jpeg"
-                    alt="Leon Mendonça Trindade"
-                    fill
-                    sizes="(max-width: 768px) 300px, 400px"
-                    style={{ objectFit: 'cover' }}
-                    priority
-                  />
-                </Box>
+              <Image
+                src="/profile-portifolio.jpeg"
+                alt="Retrato de Leon Mendonça Trindade"
+                fill
+                priority
+                sizes="(max-width: 767px) 90vw, (max-width: 1023px) 510px, 40vw"
+                className="portrait-image object-cover"
+              />
 
-                {/* Golden outline orbit animation */}
-                <Box
-                  component={motion.div}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    border: '1px dashed rgba(212, 175, 55, 0.25)',
-                    borderRadius: '50%',
-                    pointerEvents: 'none',
-                  }}
-                />
-              </Box>
+              <div className="absolute right-4 top-4 z-10 flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 group-hover:scale-105 hover:bg-black/80">
+                <Maximize2 size={16} />
+              </div>
+
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent px-7 pb-7 pt-24 text-white">
+                <p className="font-mono text-[10px] tracking-[.15em] opacity-70">ENTRE LÓGICA E CRIATIVIDADE</p>
+                <p className="mt-2 text-xl tracking-tight">Construindo o próximo passo.</p>
+              </div>
             </motion.div>
-          </Grid>
-          
-        </Grid>
-      </Container>
-    </Box>
+            <HeroAccent />
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 25, delay: 0.5 }}
+              className="absolute -left-4 top-7 rounded-full border border-border bg-background/90 px-4 py-2.5 font-mono text-[10px] tracking-widest backdrop-blur-sm shadow-sm md:-left-6"
+            >
+              PORTFÓLIO / 01
+            </motion.div>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.5} direction="up">
+          <div className="mt-14 flex items-center justify-between gap-4 border-y border-border py-5 md:mt-20">
+            <motion.a
+              href="#projetos"
+              whileHover={{ x: 3 }}
+              className="eyebrow group transition-colors hover:text-primary"
+            >
+              Continue explorando
+              <ArrowDown size={13} className="transition-transform group-hover:translate-y-0.5" />
+            </motion.a>
+            <p className="hidden font-mono text-[10px] tracking-[.12em] text-muted-foreground sm:block">
+              NEXT.JS <span className="px-3 text-primary">/</span> NESTJS <span className="px-3 text-primary">/</span> TYPESCRIPT
+            </p>
+          </div>
+        </Reveal>
+      </section>
+
+      <ImageZoomModal
+        isOpen={isPhotoOpen}
+        onClose={() => setIsPhotoOpen(false)}
+        src="/profile-portifolio.jpeg"
+        alt="Retrato de Leon Mendonça Trindade"
+        title="Leon Mendonça Trindade"
+        subtitle="Desenvolvedor Full Stack"
+      />
+    </>
   );
 }

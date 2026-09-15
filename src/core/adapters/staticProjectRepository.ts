@@ -29,7 +29,7 @@ export class StaticProjectRepository implements ProjectRepository {
       category: 'Personal Brand',
       description: 'Desenvolvimento de identidade digital e portfólio profissional para psicólogo clínico, focado em agendamentos e apresentação de serviços.',
       image: '/matheus-portifolio-image.jpeg',
-      link: 'https://portif-lio-matheus.vercel.app/',
+      link: 'https://portifolio-matheus-mt.vercel.app/',
       tags: ['React.js', 'Tailwind CSS', 'Framer Motion', 'Responsive'],
       objectPosition: 'top'
     }
