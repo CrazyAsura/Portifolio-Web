@@ -44,7 +44,7 @@ export default function CustomCursor() {
     // Three.js Scene Setup (1 unit = 1 pixel in screen space)
     // ----------------------------------------------------
     const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(0, width, height, 0, -100, 100);
+    const camera = new THREE.OrthographicCamera(0, width, 0, height, -100, 100);
     camera.position.z = 10;
 
     let renderer: THREE.WebGLRenderer | null = null;
@@ -499,7 +499,7 @@ export default function CustomCursor() {
       width = window.innerWidth;
       height = window.innerHeight;
       camera.right = width;
-      camera.top = height;
+      camera.bottom = height;
       camera.updateProjectionMatrix();
       renderer?.setSize(width, height);
     };
