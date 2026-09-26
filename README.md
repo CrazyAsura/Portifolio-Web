@@ -4,7 +4,7 @@ Este é o repositório oficial do meu portfólio profissional, desenvolvido com 
 
 ## 🚀 Sobre o Projeto
 
-O objetivo deste projeto é apresentar meus trabalhos, habilidades e experiências como Desenvolvedor Full Stack de forma elegante e profissional. O portfólio foi construído utilizando tecnologias modernas do ecossistema React, garantindo uma experiência de usuário fluida e responsiva em qualquer dispositivo.
+O objetivo deste projeto é apresentar meus trabalhos, habilidades e experiências como Desenvolvedor Software Engineer de forma elegante e profissional. O portfólio foi construído utilizando tecnologias modernas do ecossistema React, garantindo uma experiência de usuário fluida e responsiva em qualquer dispositivo.
 
 ---
 
@@ -98,7 +98,7 @@ O projeto está configurado para um deploy simplificado na [Vercel](https://verc
 ## 👨‍💻 Desenvolvedor
 
 **Leon Mendonça Trindade**  
-*Full Stack Developer*
+*Software Engineer*
 
 - **LinkedIn**: [leonmendoncatrindade](https://www.linkedin.com/in/leonmendoncatrindade/)
 - **GitHub**: [CrazyAsura](https://github.com/CrazyAsura)

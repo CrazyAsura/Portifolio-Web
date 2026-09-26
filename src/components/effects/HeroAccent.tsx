@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Terminal, ShieldCheck } from 'lucide-react';
+import { getMessages, type Locale } from '@/i18n/messages';
 
-export default function HeroAccent() {
+export default function HeroAccent({ locale }: { locale: Locale }) {
   const [time, setTime] = useState<string>('');
+  const text = getMessages(locale).hero;
 
   useEffect(() => {
     const updateTime = () => {
@@ -26,7 +28,7 @@ export default function HeroAccent() {
 
   return (
     <motion.aside
-      aria-label="Status e disponibilidade"
+      aria-label={text.status}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 350, damping: 26, delay: 0.35 }}
@@ -40,7 +42,7 @@ export default function HeroAccent() {
             <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
           </span>
           <span className="font-mono text-[11px] font-medium tracking-wide text-foreground">
-            Disponível para novos projetos
+            {text.availability}
           </span>
         </div>
         <span className="font-mono text-[10px] text-muted-foreground">
@@ -51,11 +53,11 @@ export default function HeroAccent() {
       <div className="mt-3 flex items-center justify-between text-[11px] text-muted-foreground">
         <div className="flex items-center gap-2">
           <Terminal size={13} className="text-primary translate-y-[-0.5px]" />
-          <span>Full Stack & Systems</span>
+          <span>{text.systems}</span>
         </div>
         <div className="flex items-center gap-1.5 font-mono text-[10px]">
           <ShieldCheck size={12} className="text-primary translate-y-[-0.5px]" />
-          <span>Clean Arch · TDD</span>
+          <span>{text.principles}</span>
         </div>
       </div>
     </motion.aside>

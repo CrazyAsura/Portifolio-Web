@@ -5,18 +5,19 @@ import { Home, User, Briefcase, Mail, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks/reduxHooks';
 import { toggleTheme } from '@/redux/slices/themeSlice';
+import { getMessages, type Locale } from '@/i18n/messages';
 
-const items = [
-  { name: 'Início', href: '#inicio', icon: Home },
-  { name: 'Projetos', href: '#projetos', icon: Briefcase },
-  { name: 'Sobre', href: '#sobre', icon: User },
-  { name: 'Contatos', href: '#contatos', icon: Mail },
-];
-
-export default function Dock() {
+export default function Dock({ locale }: { locale: Locale }) {
   const dispatch = useAppDispatch();
   const mode = useAppSelector(state => state.theme.mode);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const text = getMessages(locale).dock;
+  const items = [
+    { name: text.home, href: '#inicio', icon: Home },
+    { name: text.projects, href: '#projetos', icon: Briefcase },
+    { name: text.about, href: '#sobre', icon: User },
+    { name: text.contact, href: '#contatos', icon: Mail },
+  ];
 
   return (
     <motion.nav
@@ -29,7 +30,7 @@ export default function Dock() {
         bounce: 0.12,
         delay: 0.2,
       }}
-      aria-label="Atalhos e aparência"
+      aria-label={text.label}
       className="surface-panel fixed bottom-5 left-1/2 z-50 flex items-center gap-1 rounded-full p-1.5 backdrop-blur-md"
     >
       {items.map(({ name, href, icon: Icon }) => (
@@ -97,7 +98,7 @@ export default function Dock() {
         <motion.button
           type="button"
           onClick={() => dispatch(toggleTheme())}
-          aria-label={mode === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
+                aria-label={mode === 'dark' ? text.light : text.dark}
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.94 }}
           transition={{ type: 'spring', stiffness: 450, damping: 28 }}

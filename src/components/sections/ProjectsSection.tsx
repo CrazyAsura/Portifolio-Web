@@ -8,8 +8,10 @@ import type { Project } from '@/core/domain/types';
 import { Badge } from '@/components/ui/badge';
 import Reveal from '@/components/effects/Reveal';
 import ImageZoomModal from '@/components/effects/ImageZoomModal';
+import { getMessages, type Locale } from '@/i18n/messages';
 
-export default function ProjectsSection({ projects }: { projects: Project[] }) {
+export default function ProjectsSection({ projects, locale }: { projects: Project[]; locale: Locale }) {
+  const text = getMessages(locale).projects;
   const [selectedImage, setSelectedImage] = useState<{
     src: string;
     alt: string;
@@ -23,17 +25,15 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <Reveal delay={0.05}>
             <p className="eyebrow mb-5">
-              <span className="text-primary">01 /</span> Trabalhos selecionados
+              <span className="text-primary">01 /</span> {text.eyebrow}
             </p>
             <h2 id="projects-title" className="section-heading">
-              Ideias que viraram<br />
-              <span className="serif-accent">experiência.</span>
+              {text.heading}
             </h2>
           </Reveal>
           <Reveal delay={0.15}>
             <p className="max-w-[250px] text-sm leading-relaxed text-muted-foreground">
-              Produtos, interfaces e sistemas.<br />
-              Uma seleção do que venho construindo.
+              {text.description}
             </p>
           </Reveal>
         </div>
@@ -57,7 +57,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 >
                   <Image
                     src={project.image}
-                    alt={`Interface do projeto ${project.title}`}
+                    alt={text.imageAlt(project.title)}
                     fill
                     sizes={
                       index === 0
@@ -75,7 +75,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, rotate: 45 }}
                     whileTap={{ scale: 0.94 }}
-                    aria-label={`Visitar ${project.title} (abre em nova aba)`}
+                    aria-label={text.visit(project.title)}
                     className="absolute right-4 top-4 z-10 flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/65 text-white backdrop-blur-md transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
                     <ArrowUpRight size={18} className="translate-y-[-0.5px]" />
@@ -87,14 +87,14 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                     onClick={() =>
                       setSelectedImage({
                         src: project.image,
-                        alt: `Interface do projeto ${project.title}`,
+                        alt: text.imageAlt(project.title),
                         title: project.title,
                         subtitle: `0${index + 1} / ${project.category}`,
                       })
                     }
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.94 }}
-                    aria-label={`Ampliar imagem de ${project.title}`}
+                    aria-label={text.zoom(project.title)}
                     className="absolute left-4 top-4 z-10 flex size-11 items-center justify-center rounded-full border border-white/20 bg-black/65 text-white opacity-80 backdrop-blur-md transition-all hover:opacity-100 hover:border-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <Maximize2 size={16} className="translate-y-[-0.5px]" />
@@ -126,7 +126,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 </div>
 
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                  {project.description}
+                  {text.details[project.id as keyof typeof text.details] ?? project.description}
                 </p>
               </motion.div>
             </Reveal>
@@ -142,6 +142,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
         alt={selectedImage?.alt || ''}
         title={selectedImage?.title}
         subtitle={selectedImage?.subtitle}
+        locale={locale}
       />
     </>
   );

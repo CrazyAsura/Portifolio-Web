@@ -8,9 +8,11 @@ import { Button } from '@/components/ui/button';
 import HeroAccent from '@/components/effects/HeroAccent';
 import Reveal from '@/components/effects/Reveal';
 import ImageZoomModal from '@/components/effects/ImageZoomModal';
+import { getMessages, type Locale } from '@/i18n/messages';
 
-export default function HeroSection() {
+export default function HeroSection({ locale }: { locale: Locale }) {
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
+  const text = getMessages(locale).hero;
 
   return (
     <>
@@ -20,7 +22,7 @@ export default function HeroSection() {
             <Reveal delay={0.05} direction="up">
               <p className="eyebrow mb-8">
                 <span className="h-px w-8 bg-primary" />
-                Desenvolvedor full stack
+                {text.role}
               </p>
             </Reveal>
 
@@ -36,7 +38,7 @@ export default function HeroSection() {
 
             <Reveal delay={0.25} direction="up">
               <p className="mt-8 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
-                Do primeiro detalhe da interface<br className="hidden sm:block" /> à estrutura que faz tudo funcionar.
+                {text.intro}
               </p>
             </Reveal>
 
@@ -50,7 +52,7 @@ export default function HeroSection() {
                     transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                     className="group"
                   >
-                    Explorar projetos
+                    {text.explore}
                     <ArrowUpRight className="translate-y-[-0.5px] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-1" />
                   </motion.a>
                 </Button>
@@ -61,7 +63,7 @@ export default function HeroSection() {
                     whileTap={{ scale: 0.98 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   >
-                    Vamos conversar
+                    {text.talk}
                   </motion.a>
                 </Button>
               </div>
@@ -71,7 +73,7 @@ export default function HeroSection() {
               <div className="mt-14 flex items-center gap-5">
                 <span className="h-px w-9 bg-border" />
                 <p className="font-mono text-[10px] tracking-[.1em] text-muted-foreground">
-                  CÓDIGO COM INTENÇÃO. DESIGN COM CLAREZA.
+                  {text.motto}
                 </p>
               </div>
             </Reveal>
@@ -87,7 +89,7 @@ export default function HeroSection() {
             >
               <Image
                 src="/profile-portifolio.jpeg"
-                alt="Retrato de Leon Mendonça Trindade"
+                alt={text.portrait}
                 fill
                 priority
                 sizes="(max-width: 767px) 90vw, (max-width: 1023px) 510px, 40vw"
@@ -99,18 +101,18 @@ export default function HeroSection() {
               </div>
 
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent px-7 pb-7 pt-24 text-white">
-                <p className="font-mono text-[10px] tracking-[.15em] opacity-70">ENTRE LÓGICA E CRIATIVIDADE</p>
-                <p className="mt-2 text-xl tracking-tight">Construindo o próximo passo.</p>
+                <p className="font-mono text-[10px] tracking-[.15em] opacity-70">{text.caption}</p>
+                <p className="mt-2 text-xl tracking-tight">{text.nextStep}</p>
               </div>
             </motion.div>
-            <HeroAccent />
+            <HeroAccent locale={locale} />
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 350, damping: 25, delay: 0.5 }}
               className="absolute -left-4 top-7 rounded-full border border-border bg-background/90 px-4 py-2.5 font-mono text-[10px] tracking-widest backdrop-blur-sm shadow-sm md:-left-6"
             >
-              PORTFÓLIO / 01
+              {text.portfolio}
             </motion.div>
           </Reveal>
         </div>
@@ -122,7 +124,7 @@ export default function HeroSection() {
               whileHover={{ x: 3 }}
               className="eyebrow group transition-colors hover:text-primary"
             >
-              Continue explorando
+              {text.continue}
               <ArrowDown size={13} className="transition-transform group-hover:translate-y-0.5" />
             </motion.a>
             <p className="hidden font-mono text-[10px] tracking-[.12em] text-muted-foreground sm:block">
@@ -136,9 +138,10 @@ export default function HeroSection() {
         isOpen={isPhotoOpen}
         onClose={() => setIsPhotoOpen(false)}
         src="/profile-portifolio.jpeg"
-        alt="Retrato de Leon Mendonça Trindade"
+        alt={text.portrait}
         title="Leon Mendonça Trindade"
-        subtitle="Desenvolvedor Full Stack"
+        subtitle={text.modalSubtitle}
+        locale={locale}
       />
     </>
   );

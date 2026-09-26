@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { X, ZoomIn, ZoomOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { getMessages, type Locale } from '@/i18n/messages';
 
 interface ImageZoomModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface ImageZoomModalProps {
   alt: string;
   title?: string;
   subtitle?: string;
+  locale: Locale;
 }
 
 export default function ImageZoomModal({
@@ -21,7 +23,9 @@ export default function ImageZoomModal({
   alt,
   title,
   subtitle,
+  locale,
 }: ImageZoomModalProps) {
+  const text = getMessages(locale).imageModal;
   const [isMagnified, setIsMagnified] = useState(false);
 
   const handleClose = useCallback(() => {
@@ -61,7 +65,7 @@ export default function ImageZoomModal({
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label={title || 'Visualização ampliada da imagem'}
+          aria-label={title || text.dialog}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -79,7 +83,7 @@ export default function ImageZoomModal({
               onClick={() => setIsMagnified(prev => !prev)}
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
-              aria-label={isMagnified ? 'Reduzir zoom' : 'Ampliar zoom'}
+              aria-label={isMagnified ? text.zoomOut : text.zoomIn}
               className="flex size-11 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-colors hover:border-primary hover:bg-black/80 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               {isMagnified ? <ZoomOut size={18} /> : <ZoomIn size={18} />}
@@ -90,7 +94,7 @@ export default function ImageZoomModal({
               onClick={handleClose}
               whileHover={{ scale: 1.08, rotate: 90 }}
               whileTap={{ scale: 0.92 }}
-              aria-label="Fechar visualização ampliada"
+              aria-label={text.close}
               className="flex size-11 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-colors hover:border-white/60 hover:bg-black/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
               <X size={18} />
@@ -138,7 +142,7 @@ export default function ImageZoomModal({
                   {subtitle && <p className="font-mono text-[11px] text-white/70 tracking-wider">{subtitle}</p>}
                 </div>
                 <span className="hidden font-mono text-[10px] text-white/50 tracking-widest sm:block">
-                  ESC PARA FECHAR
+                  {text.escape}
                 </span>
               </div>
             )}
@@ -148,4 +152,3 @@ export default function ImageZoomModal({
     </AnimatePresence>
   );
 }
-

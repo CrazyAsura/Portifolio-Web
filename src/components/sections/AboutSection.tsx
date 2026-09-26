@@ -3,54 +3,58 @@
 import { motion } from 'motion/react';
 import { Badge } from '@/components/ui/badge';
 import Reveal from '@/components/effects/Reveal';
+import { getMessages, type Locale } from '@/i18n/messages';
 
-const categories = [
-  {
-    title: 'Frontend & Mobile',
-    skills: ['Next.js', 'Expo', 'React Query', 'Zod', 'React Hook Form', 'Redux Toolkit'],
-  },
-  {
-    title: 'Backend & Integrações',
-    skills: ['NestJS', 'JWT', 'WebSockets', 'Kafka', 'Redis', 'Argon2'],
-  },
-  {
-    title: 'Bancos de dados',
-    skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'SQL Server'],
-  },
-  {
-    title: 'Design & Diagramas',
-    skills: ['Figma', 'Framer', 'DBDiagram', 'Excalidraw'],
-  },
-];
+const skillIcons: Record<string, string> = {
+  'Next.js': 'devicon-nextjs-original',
+  Expo: 'devicon-expo-original',
+  'Redux Toolkit': 'devicon-redux-original',
+  NestJS: 'devicon-nestjs-original',
+  'ASP.NET Core': 'devicon-dotnetcore-plain',
+  'Java Spring Boot': 'devicon-spring-original',
+  Kafka: 'devicon-apachekafka-original',
+  Redis: 'devicon-redis-plain',
+  MySQL: 'devicon-mysql-original',
+  PostgreSQL: 'devicon-postgresql-plain',
+  MongoDB: 'devicon-mongodb-plain',
+  'SQL Server': 'devicon-microsoftsqlserver-plain',
+  Figma: 'devicon-figma-plain',
+};
 
-const stats = [
-  { value: '+2 anos', label: 'Estudo intensivo' },
-  { value: '10+', label: 'Projetos criados' },
-  { value: 'C1', label: 'Inglês avançado' },
-];
-
-export default function AboutSection() {
+export default function AboutSection({ locale }: { locale: Locale }) {
+  const text = getMessages(locale).about;
+  const categories = [
+    { title: text.categories[0], skills: ['Next.js', 'Expo', 'React Query', 'Zod', 'React Hook Form', 'Redux Toolkit'] },
+    { title: text.categories[1], skills: ['NestJS', 'ASP.NET Core', 'Java Spring Boot', 'JWT', 'WebSockets', 'Kafka', 'Redis', 'Argon2'] },
+    { title: text.categories[2], skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'SQL Server'] },
+    { title: text.categories[3], skills: ['Figma', 'Framer', 'DBDiagram', 'Excalidraw'] },
+  ];
+  const stats = [
+    { value: locale === 'pt' ? '+3 anos' : '+3 years', label: text.stats[0] },
+    { value: '5+', label: text.stats[1] },
+    { value: 'C1', label: text.stats[2] },
+  ];
   return (
     <section id="sobre" aria-labelledby="about-title" className="border-y border-border bg-card py-20 md:py-28">
       <div className="section-shell grid gap-14 lg:grid-cols-2 lg:gap-24">
         <div>
           <Reveal delay={0.05}>
             <p className="eyebrow mb-5">
-              <span className="text-primary">02 /</span> Sobre mim
+              <span className="text-primary">02 /</span> {text.eyebrow}
             </p>
             <h2 id="about-title" className="section-heading">
-              Atenção ao detalhe.<br />
-              <span className="serif-accent">Visão do todo.</span>
+              {text.headingA}<br />
+              <span className="serif-accent">{text.headingB}</span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.15}>
             <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground">
               <p>
-                Sou Leon, desenvolvedor full stack. Trabalho da interface à modelagem de dados, unindo raciocínio lógico e design de sistemas.
+                {text.paragraphs[0]}
               </p>
               <p>
-                Meu foco está em sistemas escaláveis, respostas rápidas e interfaces que funcionam bem em qualquer tela. Gosto de entender o problema inteiro antes de escrever a primeira linha.
+                {text.paragraphs[1]}
               </p>
             </div>
           </Reveal>
@@ -77,10 +81,9 @@ export default function AboutSection() {
               transition={{ type: 'spring', stiffness: 350, damping: 25 }}
               className="mt-10 rounded-2xl border border-border bg-background/50 p-5 backdrop-blur-sm transition-colors hover:border-primary/40"
             >
-              <p className="eyebrow mb-3">Formação / Senac</p>
+              <p className="eyebrow mb-3">{text.education}</p>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Informática Básica · Lógica de Programação<br />
-                Programador Web · Programador Full Stack
+                {text.educationDetail}
               </p>
             </motion.div>
           </Reveal>
@@ -102,6 +105,7 @@ export default function AboutSection() {
                     transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   >
                     <Badge className="bg-background/70 px-3.5 py-1.5 transition-colors hover:border-primary/50 hover:text-foreground">
+                      {skillIcons[skill] && <i aria-hidden="true" className={`${skillIcons[skill]} mr-2 text-base`} />}
                       {skill}
                     </Badge>
                   </motion.div>

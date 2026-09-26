@@ -4,13 +4,15 @@ import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { Contact } from '@/core/domain/types';
 import Reveal from '@/components/effects/Reveal';
+import { getMessages, type Locale } from '@/i18n/messages';
 
-export default function ContactSection({ contacts }: { contacts: Contact[] }) {
+export default function ContactSection({ contacts, locale }: { contacts: Contact[]; locale: Locale }) {
+  const text = getMessages(locale).contact;
   return (
     <section id="contatos" aria-labelledby="contact-title" className="section-shell py-24 md:py-32">
       <Reveal delay={0.05}>
         <p className="eyebrow mb-6">
-          <span className="text-primary">03 /</span> Próxima conversa
+          <span className="text-primary">03 /</span> {text.eyebrow}
         </p>
       </Reveal>
 
@@ -18,14 +20,14 @@ export default function ContactSection({ contacts }: { contacts: Contact[] }) {
         <div>
           <Reveal delay={0.15}>
             <h2 id="contact-title" className="section-heading">
-              Tem algo<br />
-              <span className="serif-accent">em mente?</span>
+              {text.headingA}<br />
+              <span className="serif-accent">{text.headingB}</span>
             </h2>
           </Reveal>
 
           <Reveal delay={0.25}>
             <p className="mt-7 max-w-sm text-base leading-relaxed text-muted-foreground">
-              Um projeto, uma oportunidade ou uma boa ideia. Vamos conversar sobre o próximo passo.
+              {text.description}
             </p>
           </Reveal>
         </div>

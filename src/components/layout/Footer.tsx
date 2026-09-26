@@ -2,8 +2,10 @@
 
 import { ArrowUp } from 'lucide-react';
 import { motion } from 'motion/react';
+import { getMessages, type Locale } from '@/i18n/messages';
 
-export default function Footer() {
+export default function Footer({ locale }: { locale: Locale }) {
+  const text = getMessages(locale).footer;
   return (
     <footer className="border-t border-border pb-32 pt-7">
       <div className="section-shell flex flex-wrap items-center justify-between gap-4 text-[10px] text-muted-foreground">
@@ -15,7 +17,7 @@ export default function Footer() {
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
           className="group flex items-center gap-1.5 font-mono tracking-wider transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded"
         >
-          DE VOLTA AO TOPO
+          {text.backToTop}
           <ArrowUp size={12} className="transition-transform duration-200 group-hover:-translate-y-0.5" />
         </motion.a>
       </div>

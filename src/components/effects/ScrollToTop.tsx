@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { getMessages, type Locale } from '@/i18n/messages';
 
-export default function ScrollToTop() {
+export default function ScrollToTop({ locale }: { locale: Locale }) {
+  const text = getMessages(locale).footer;
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -56,7 +58,7 @@ export default function ScrollToTop() {
         <motion.button
           type="button"
           onClick={scrollToTop}
-          aria-label="Voltar para o topo da página"
+          aria-label={text.top}
           initial={{ opacity: 0, scale: 0.8, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 16 }}
@@ -107,4 +109,3 @@ export default function ScrollToTop() {
     </AnimatePresence>
   );
 }
-
