@@ -38,6 +38,7 @@ export default function ContactSection({ contacts }: { contacts: Contact[] }) {
                 target={contact.href.startsWith('https:') ? '_blank' : undefined}
                 rel={contact.href.startsWith('https:') ? 'noopener noreferrer' : undefined}
                 whileHover={{ x: 6 }}
+                whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 className="group flex items-center justify-between gap-4 border-b border-border py-5 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 rounded-md"
               >
@@ -49,8 +50,8 @@ export default function ContactSection({ contacts }: { contacts: Contact[] }) {
                 </span>
                 <span className="flex size-10 items-center justify-center rounded-full border border-border/60 transition-all duration-200 group-hover:border-primary group-hover:bg-primary/10">
                   <ArrowUpRight
-                    size={20}
-                    className="shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    size={19}
+                    className="shrink-0 translate-y-[-0.5px] transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1"
                   />
                 </span>
               </motion.a>

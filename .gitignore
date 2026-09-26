@@ -27,7 +27,8 @@
 *.pem
 
 # debug
-npm-debug.log*
+# logs
+*.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*

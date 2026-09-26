@@ -34,11 +34,11 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.186.0",
-    "@typescript/native": "npm:typescript@^7.0.2",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^10",
     "eslint-config-next": "16.3.5",
     "tailwindcss": "^4",
-    "typescript": "npm:@typescript/typescript6@^6.0.2"
-  }
+    "typescript": "^7.0.2"
+  },
+  "packageManager": "bun@1.4.2"
 }

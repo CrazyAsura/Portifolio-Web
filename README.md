@@ -52,12 +52,12 @@ Seguindo os princípios de **Clean Code**, **SOLID** e **Clean Architecture**, o
 2. **Instalar as dependências:**
    ```bash
    cd front-end
-   npm install
+   bun install
    ```
 
 3. **Executar o servidor de desenvolvimento:**
    ```bash
-   npm run dev
+   bun dev
    ```
 
 4. **Acessar no navegador:**
@@ -89,8 +89,8 @@ O projeto está configurado para um deploy simplificado na [Vercel](https://verc
 1. **Importe o repositório** no dashboard da Vercel.
 2. **Configure o Root Directory**: Como o projeto está na pasta `front-end`, certifique-se de definir o `Root Directory` como `front-end` nas configurações do projeto na Vercel.
 3. **Build Settings**: As configurações padrão do Next.js serão detectadas automaticamente, mas o arquivo `vercel.json` já garante os comandos corretos:
-   - Build Command: `npm run build`
-   - Install Command: `npm install`
+   - Build Command: `bun run build`
+   - Install Command: `bun install`
 4. **Environment Variables**: Caso adicione integrações futuras (como formulários ou CMS), configure as variáveis de ambiente no painel da Vercel.
 
 ---

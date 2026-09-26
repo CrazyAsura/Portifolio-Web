@@ -24,13 +24,13 @@ export default function Dock() {
       animate={{ y: 0, opacity: 1, x: '-50%' }}
       transition={{
         type: 'spring',
-        stiffness: 350,
+        stiffness: 380,
         damping: 30,
-        bounce: 0.15,
+        bounce: 0.12,
         delay: 0.2,
       }}
       aria-label="Atalhos e aparência"
-      className="fixed bottom-5 left-1/2 z-50 flex items-center gap-1.5 rounded-full border border-border/80 bg-background/90 p-2 shadow-[0_12px_40px_rgba(0,0,0,0.14)] backdrop-blur-md"
+      className="surface-panel fixed bottom-5 left-1/2 z-50 flex items-center gap-1 rounded-full p-1.5 backdrop-blur-md"
     >
       {items.map(({ name, href, icon: Icon }) => (
         <div
@@ -45,8 +45,8 @@ export default function Dock() {
                 initial={{ opacity: 0, y: 6, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-                className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-border bg-background/95 px-2.5 py-1 font-mono text-[10px] tracking-wider text-foreground shadow-sm backdrop-blur-sm"
+                transition={{ type: 'spring', stiffness: 500, damping: 32 }}
+                className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-border/80 bg-background/95 px-2.5 py-1 font-mono text-[10px] tracking-wider text-foreground shadow-sm backdrop-blur-sm"
               >
                 {name}
               </motion.span>
@@ -56,17 +56,24 @@ export default function Dock() {
           <motion.a
             href={href}
             aria-label={name}
-            whileHover={{ y: -3, scale: 1.1 }}
-            whileTap={{ scale: 0.92 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-            className="flex size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.94 }}
+            transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+            className="relative flex size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
-            <Icon size={18} />
+            {hoveredItem === name && (
+              <motion.span
+                layoutId="dock-hover-pill"
+                transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                className="absolute inset-0 rounded-full bg-accent"
+              />
+            )}
+            <Icon size={17} className="relative z-10 translate-y-[-0.5px]" />
           </motion.a>
         </div>
       ))}
 
-      <span className="mx-1 h-5 w-px bg-border/80" />
+      <span className="mx-1 h-4 w-px bg-border/80" />
 
       <div
         className="relative"
@@ -79,8 +86,8 @@ export default function Dock() {
               initial={{ opacity: 0, y: 6, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 4, scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-              className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-border bg-background/95 px-2.5 py-1 font-mono text-[10px] tracking-wider text-foreground shadow-sm backdrop-blur-sm"
+              transition={{ type: 'spring', stiffness: 500, damping: 32 }}
+              className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-border/80 bg-background/95 px-2.5 py-1 font-mono text-[10px] tracking-wider text-foreground shadow-sm backdrop-blur-sm"
             >
               {mode === 'dark' ? 'Tema Claro' : 'Tema Escuro'}
             </motion.span>
@@ -91,29 +98,35 @@ export default function Dock() {
           type="button"
           onClick={() => dispatch(toggleTheme())}
           aria-label={mode === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
-          whileHover={{ y: -3, scale: 1.1 }}
-          whileTap={{ scale: 0.92 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className="flex size-10 items-center justify-center rounded-full text-primary transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.94 }}
+          transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+          className="relative flex size-10 items-center justify-center rounded-full text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
+          {hoveredItem === 'theme' && (
+            <motion.span
+              layoutId="dock-hover-pill"
+              transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+              className="absolute inset-0 rounded-full bg-accent"
+            />
+          )}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={mode}
-              initial={{ rotate: -180, scale: 0.4, opacity: 0 }}
+              initial={{ rotate: -90, scale: 0.6, opacity: 0 }}
               animate={{ rotate: 0, scale: 1, opacity: 1 }}
-              exit={{ rotate: 180, scale: 0.4, opacity: 0 }}
+              exit={{ rotate: 90, scale: 0.6, opacity: 0 }}
               transition={{
                 type: 'spring',
-                stiffness: 320,
-                damping: 18,
-                bounce: 0.3,
+                stiffness: 350,
+                damping: 22,
               }}
-              className="flex items-center justify-center"
+              className="relative z-10 flex items-center justify-center"
             >
               {mode === 'dark' ? (
-                <Sun size={19} className="transition-transform duration-300 hover:rotate-45" />
+                <Sun size={17} className="translate-y-[-0.5px]" />
               ) : (
-                <Moon size={19} className="transition-transform duration-300 hover:-rotate-12" />
+                <Moon size={17} className="translate-y-[-0.5px]" />
               )}
             </motion.div>
           </AnimatePresence>

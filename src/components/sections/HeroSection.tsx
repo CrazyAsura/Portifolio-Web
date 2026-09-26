@@ -45,20 +45,20 @@ export default function HeroSection() {
                 <Button asChild>
                   <motion.a
                     href="#projetos"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ y: -1 }}
+                    whileTap={{ scale: 0.98 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                     className="group"
                   >
                     Explorar projetos
-                    <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="translate-y-[-0.5px] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-1" />
                   </motion.a>
                 </Button>
                 <Button asChild variant="outline">
                   <motion.a
                     href="#contatos"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ y: -1 }}
+                    whileTap={{ scale: 0.98 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   >
                     Vamos conversar
@@ -83,7 +83,7 @@ export default function HeroSection() {
               whileHover={{ y: -4 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-              className="portrait-surface group relative aspect-[.91] cursor-pointer overflow-hidden rounded-[32px] shadow-2xl transition-all duration-300 hover:shadow-primary/10 md:rounded-[40px]"
+              className="portrait-surface group relative aspect-[.91] cursor-pointer overflow-hidden rounded-[32px] border border-border/80 md:rounded-[40px]"
             >
               <Image
                 src="/profile-portifolio.jpeg"
@@ -95,7 +95,7 @@ export default function HeroSection() {
               />
 
               <div className="absolute right-4 top-4 z-10 flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 group-hover:scale-105 hover:bg-black/80">
-                <Maximize2 size={16} />
+                <Maximize2 size={15} className="translate-y-[-0.5px]" />
               </div>
 
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent px-7 pb-7 pt-24 text-white">

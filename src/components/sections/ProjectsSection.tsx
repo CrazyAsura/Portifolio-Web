@@ -45,9 +45,13 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
               delay={0.1 + (index % 2) * 0.15}
               className={index === 0 ? 'md:col-span-2' : ''}
             >
-              <div className="group rounded-[28px]">
+              <motion.div
+                whileHover={{ y: -3 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                className="surface-panel group rounded-[28px] p-2.5 transition-colors hover:border-primary/40 md:p-3"
+              >
                 <div
-                  className={`relative overflow-hidden rounded-[24px] border border-border bg-card shadow-sm transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-lg ${
+                  className={`relative overflow-hidden rounded-[18px] border border-border/60 bg-card ${
                     index === 0 ? 'aspect-[1.35] md:aspect-[2.25]' : 'aspect-[1.5]'
                   }`}
                 >
@@ -72,9 +76,9 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                     whileHover={{ scale: 1.1, rotate: 45 }}
                     whileTap={{ scale: 0.94 }}
                     aria-label={`Visitar ${project.title} (abre em nova aba)`}
-                    className="absolute right-4 top-4 z-10 flex size-11 items-center justify-center rounded-full border border-white/20 bg-black/65 text-white backdrop-blur-md transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    className="absolute right-4 top-4 z-10 flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/65 text-white backdrop-blur-md transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
-                    <ArrowUpRight size={19} />
+                    <ArrowUpRight size={18} className="translate-y-[-0.5px]" />
                   </motion.a>
 
                   {/* Top-Left: Zoom / Enlarge Button */}
@@ -93,7 +97,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                     aria-label={`Ampliar imagem de ${project.title}`}
                     className="absolute left-4 top-4 z-10 flex size-11 items-center justify-center rounded-full border border-white/20 bg-black/65 text-white opacity-80 backdrop-blur-md transition-all hover:opacity-100 hover:border-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
-                    <Maximize2 size={17} />
+                    <Maximize2 size={16} className="translate-y-[-0.5px]" />
                   </motion.button>
 
                   <span className="absolute bottom-4 left-4 rounded-full bg-black/70 px-3 py-1.5 font-mono text-[10px] tracking-wider text-white backdrop-blur-md">
@@ -124,7 +128,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
                   {project.description}
                 </p>
-              </div>
+              </motion.div>
             </Reveal>
           ))}
         </div>
