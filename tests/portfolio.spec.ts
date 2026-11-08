@@ -15,6 +15,11 @@ test('navegação, tema persistente e layout responsivo', async ({ page }) => {
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  const dock = page.getByRole('navigation', { name: 'Atalhos e aparência' });
+  await expect(dock).toHaveCSS('position', 'fixed');
+  const dockBox = await dock.boundingBox();
+  expect(dockBox).not.toBeNull();
+  expect(dockBox!.width).toBeLessThan(300);
   await expect(page.locator('html')).toHaveClass(/dark/);
   await page.getByRole('button', { name: 'Ativar tema claro' }).click();
   await expect(page.locator('html')).not.toHaveClass(/dark/);

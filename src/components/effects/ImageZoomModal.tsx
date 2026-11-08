@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, type MouseEvent } from 'react';
 import Image from 'next/image';
 import { X, ZoomIn, ZoomOut } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion/react';
 import { getMessages, type Locale } from '@/i18n/messages';
 
 interface ImageZoomModalProps {
@@ -28,10 +28,41 @@ export default function ImageZoomModal({
   const text = getMessages(locale).imageModal;
   const [isMagnified, setIsMagnified] = useState(false);
 
-  const handleClose = useCallback(() => {
+  const panX = useMotionValue(0);
+  const panY = useMotionValue(0);
+  const springPanX = useSpring(panX, { stiffness: 260, damping: 28 });
+  const springPanY = useSpring(panY, { stiffness: 260, damping: 28 });
+
+  const resetZoom = useCallback(() => {
     setIsMagnified(false);
+    panX.set(0);
+    panY.set(0);
+  }, [panX, panY]);
+
+  const handleClose = useCallback(() => {
+    resetZoom();
     onClose();
-  }, [onClose]);
+  }, [onClose, resetZoom]);
+
+  const toggleMagnify = () => {
+    setIsMagnified(prev => {
+      const next = !prev;
+      if (!next) {
+        panX.set(0);
+        panY.set(0);
+      }
+      return next;
+    });
+  };
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isMagnified) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetX = (0.5 - (e.clientX - rect.left) / rect.width) * 140;
+    const offsetY = (0.5 - (e.clientY - rect.top) / rect.height) * 100;
+    panX.set(offsetX);
+    panY.set(offsetY);
+  };
 
   // Close on Escape key
   useEffect(() => {
@@ -75,12 +106,12 @@ export default function ImageZoomModal({
         >
           {/* Top Actions Bar */}
           <div
-            className="absolute top-6 right-6 z-20 flex items-center gap-3"
+            className="absolute right-6 top-6 z-20 flex items-center gap-3"
             onClick={e => e.stopPropagation()}
           >
             <motion.button
               type="button"
-              onClick={() => setIsMagnified(prev => !prev)}
+              onClick={toggleMagnify}
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
               aria-label={isMagnified ? text.zoomOut : text.zoomIn}
@@ -105,7 +136,7 @@ export default function ImageZoomModal({
           <motion.div
             initial={{ scale: 0.88, opacity: 0, y: 20 }}
             animate={{
-              scale: isMagnified ? 1.25 : 1,
+              scale: isMagnified ? 1.28 : 1,
               opacity: 1,
               y: 0,
             }}
@@ -116,15 +147,23 @@ export default function ImageZoomModal({
               damping: 28,
               bounce: 0.12,
             }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={() => {
+              panX.set(0);
+              panY.set(0);
+            }}
             onClick={e => {
               e.stopPropagation();
-              setIsMagnified(prev => !prev);
+              toggleMagnify();
             }}
-            className={`relative max-h-[85vh] max-w-[92vw] overflow-hidden rounded-[24px] border border-white/15 bg-card/90 shadow-2xl transition-all duration-300 md:max-w-[1100px] ${
+            className={`relative max-h-[85vh] max-w-[92vw] overflow-hidden rounded-[24px] border border-white/15 bg-card/90 shadow-2xl transition-colors duration-300 md:max-w-[1100px] ${
               isMagnified ? 'cursor-zoom-out' : 'cursor-zoom-in'
             }`}
           >
-            <div className="relative aspect-[1.5] w-[88vw] max-w-[1020px] max-h-[75vh]">
+            <motion.div
+              style={{ x: springPanX, y: springPanY }}
+              className="relative aspect-[1.5] max-h-[75vh] w-[88vw] max-w-[1020px]"
+            >
               <Image
                 src={src}
                 alt={alt}
@@ -133,15 +172,15 @@ export default function ImageZoomModal({
                 sizes="(max-width: 1200px) 92vw, 1100px"
                 className="object-contain"
               />
-            </div>
+            </motion.div>
 
             {(title || subtitle) && (
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between border-t border-white/10 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-6 py-4 text-white">
                 <div>
                   {title && <p className="text-base font-medium tracking-tight md:text-lg">{title}</p>}
-                  {subtitle && <p className="font-mono text-[11px] text-white/70 tracking-wider">{subtitle}</p>}
+                  {subtitle && <p className="font-mono text-[11px] tracking-wider text-white/70">{subtitle}</p>}
                 </div>
-                <span className="hidden font-mono text-[10px] text-white/50 tracking-widest sm:block">
+                <span className="hidden font-mono text-[10px] tracking-widest text-white/50 sm:block">
                   {text.escape}
                 </span>
               </div>

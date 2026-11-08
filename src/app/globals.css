@@ -48,14 +48,38 @@
   --color-gold: var(--primary);
   --font-sans: var(--font-geist-sans), Arial, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
+  --font-serif: var(--font-serif-editorial), Georgia, 'Times New Roman', serif;
   --radius-sm: calc(var(--radius) - 12px);
   --radius-md: calc(var(--radius) - 8px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 8px);
 }
 * { box-sizing: border-box; }
-html { scrollbar-color: #b99a53 var(--background); scrollbar-width: thin; scroll-padding-top: 2rem; }
-body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); }
+html { scrollbar-color: #b99a53 var(--background); scrollbar-width: thin; scroll-padding-top: 2rem; overflow-x: clip; }
+body {
+  margin: 0;
+  overflow-x: clip;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse 80% 45% at 50% -10%, rgba(128, 96, 30, 0.08), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 85% 35%, rgba(128, 96, 30, 0.04), transparent 70%);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+.dark body {
+  background-image:
+    radial-gradient(ellipse 80% 45% at 50% -10%, rgba(214, 187, 124, 0.075), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 85% 35%, rgba(214, 187, 124, 0.035), transparent 70%);
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0.024;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 ::selection { background: var(--primary); color: var(--primary-foreground); }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--background); }
@@ -65,19 +89,41 @@ a, button { -webkit-tap-highlight-color: transparent; }
 button, a { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
 
-/* Craft UI Surface Depth (Highlight Superior / Inner Glow) */
-.surface-panel {
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.45), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
-}
-.dark .surface-panel {
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 4px 16px -4px rgba(0, 0, 0, 0.5);
+/* Craft UI Surface Depth (Highlight Superior / Inner Glow / Spotlight) */
+@layer components {
+  .surface-panel {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.45), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+  }
+  .dark .surface-panel {
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 4px 16px -4px rgba(0, 0, 0, 0.5);
+  }
+  .spotlight-card {
+    position: relative;
+  }
+  .spotlight-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    background: radial-gradient(
+      480px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      color-mix(in srgb, var(--primary) 11%, transparent),
+      transparent 65%
+    );
+  }
+  .spotlight-card:hover::after {
+    opacity: 1;
+  }
 }
 .section-shell { width: min(1248px, calc(100% - 96px)); margin-inline: auto; }
 .eyebrow { display: flex; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 10px; line-height: 1.6; letter-spacing: .16em; text-transform: uppercase; color: var(--muted-foreground); }
 .section-heading { font-size: clamp(2.5rem, 5vw, 4.75rem); line-height: 1.06; letter-spacing: -.065em; font-weight: 450; }
-.serif-accent { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-style: italic; letter-spacing: -.055em; color: var(--primary); }
+.serif-accent { font-family: var(--font-serif-editorial), Georgia, 'Times New Roman', serif; font-weight: 400; font-style: italic; letter-spacing: -.025em; color: var(--primary); }
 .portrait-surface { background: #d6cfbf; }
 .portrait-image { filter: grayscale(1); transition: filter .6s ease, transform .8s ease; }
 .portrait-surface:hover .portrait-image { filter: grayscale(0); transform: scale(1.035); }

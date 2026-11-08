@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google';
 import '../globals.css';
 import 'devicon/devicon.min.css';
 import { Providers } from '@/providers/Providers';
@@ -12,6 +12,12 @@ import { locales, type Locale } from '@/i18n/messages';
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] });
+const instrumentSerif = Instrument_Serif({
+  variable: '--font-serif-editorial',
+  weight: '400',
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+});
 
 export function generateStaticParams() {
   return locales.map(locale => ({ locale }));
@@ -47,7 +53,7 @@ export default async function RootLayout({
   return (
     <html lang={locale === 'pt' ? 'pt-BR' : 'en'} className="dark" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}>
         <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-5 focus:py-3 focus:text-primary-foreground">
           {locale === 'pt' ? 'Pular para o conteúdo' : 'Skip to content'}
         </a>

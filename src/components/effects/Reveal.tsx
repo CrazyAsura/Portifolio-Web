@@ -1,7 +1,7 @@
 'use client';
 
-import { type ReactNode } from 'react';
-import { motion, type HTMLMotionProps } from 'motion/react';
+import { useEffect, type ReactNode } from 'react';
+import { motion, useAnimate, type HTMLMotionProps } from 'motion/react';
 
 interface RevealProps extends HTMLMotionProps<'div'> {
   children: ReactNode;
@@ -21,40 +21,73 @@ export default function Reveal({
   distance = 24,
   ...props
 }: RevealProps) {
-  const getInitialOffset = () => {
-    switch (direction) {
-      case 'up':
-        return { y: distance, x: 0 };
-      case 'down':
-        return { y: -distance, x: 0 };
-      case 'left':
-        return { x: distance, y: 0 };
-      case 'right':
-        return { x: -distance, y: 0 };
-      case 'none':
-      default:
-        return { x: 0, y: 0 };
-    }
-  };
+  const [scope, animate] = useAnimate<HTMLDivElement>();
 
-  const offset = getInitialOffset();
+  useEffect(() => {
+    const el = scope.current;
+    if (!el) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      return;
+    }
+
+    const offset =
+      direction === 'up'
+        ? { x: 0, y: distance }
+        : direction === 'down'
+          ? { x: 0, y: -distance }
+          : direction === 'left'
+            ? { x: distance, y: 0 }
+            : direction === 'right'
+              ? { x: -distance, y: 0 }
+              : { x: 0, y: 0 };
+
+    const playEntrance = () => {
+      animate(
+        el,
+        {
+          opacity: [0, 1],
+          x: [offset.x, 0],
+          y: [offset.y, 0],
+        },
+        {
+          type: 'spring',
+          stiffness: 280,
+          damping: 28,
+          bounce: 0.1,
+          delay,
+          duration,
+        },
+      );
+    };
+
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.92) {
+      playEntrance();
+      return;
+    }
+
+    el.style.opacity = '0';
+    el.style.transform = `translate3d(${offset.x}px, ${offset.y}px, 0)`;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          observer.disconnect();
+          playEntrance();
+        }
+      },
+      { threshold: 0.12 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [animate, delay, direction, distance, duration, scope]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, ...offset }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{
-        type: 'spring',
-        stiffness: 280,
-        damping: 28,
-        bounce: 0.1,
-        delay,
-        duration,
-      }}
-      className={className}
-      {...props}
-    >
+    <motion.div ref={scope} className={className} {...props}>
       {children}
     </motion.div>
   );

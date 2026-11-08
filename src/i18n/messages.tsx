@@ -16,6 +16,8 @@ export const messages = {
     projects: {
       eyebrow: 'Trabalhos selecionados', heading: <>Ideias que viraram<br /><span className="serif-accent">experiência.</span></>,
       description: <>Produtos, interfaces e sistemas.<br />Uma seleção do que venho construindo.</>,
+      featured: 'Projeto em destaque',
+      exploreProject: 'Acessar projeto',
       visit: (title: string) => `Visitar ${title} (abre em nova aba)`, zoom: (title: string) => `Ampliar imagem de ${title}`,
       imageAlt: (title: string) => `Interface do projeto ${title}`,
       details: {
@@ -37,6 +39,8 @@ export const messages = {
     contact: {
       eyebrow: 'Próxima conversa', headingA: 'Tem algo', headingB: 'em mente?',
       description: 'Um projeto, uma oportunidade ou uma boa ideia. Vamos conversar sobre o próximo passo.',
+      copy: (label: string) => `Copiar ${label}`,
+      copied: 'Copiado',
     },
     footer: { backToTop: 'DE VOLTA AO TOPO', top: 'Voltar para o topo da página' },
     imageModal: { dialog: 'Visualização ampliada da imagem', close: 'Fechar visualização ampliada', zoomIn: 'Ampliar imagem', zoomOut: 'Reduzir imagem', escape: 'ESC PARA FECHAR' },
@@ -54,6 +58,8 @@ export const messages = {
     projects: {
       eyebrow: 'Selected work', heading: <>Ideas turned into<br /><span className="serif-accent">experiences.</span></>,
       description: <>Products, interfaces, and systems.<br />A selection of what I have been building.</>,
+      featured: 'Featured project',
+      exploreProject: 'Open project',
       visit: (title: string) => `Visit ${title} (opens in a new tab)`, zoom: (title: string) => `Enlarge image of ${title}`,
       imageAlt: (title: string) => `Interface for the ${title} project`,
       details: {
@@ -75,6 +81,8 @@ export const messages = {
     contact: {
       eyebrow: 'Start a conversation', headingA: 'Have something', headingB: 'in mind?',
       description: "A project, an opportunity, or a good idea. Let's talk about the next step.",
+      copy: (label: string) => `Copy ${label}`,
+      copied: 'Copied',
     },
     footer: { backToTop: 'BACK TO TOP', top: 'Back to the top of the page' },
     imageModal: { dialog: 'Enlarged image view', close: 'Close enlarged view', zoomIn: 'Zoom in', zoomOut: 'Zoom out', escape: 'ESC TO CLOSE' },

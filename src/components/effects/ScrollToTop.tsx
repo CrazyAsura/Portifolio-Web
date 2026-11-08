@@ -70,7 +70,7 @@ export default function ScrollToTop({ locale }: { locale: Locale }) {
           }}
           whileHover={{ scale: 1.08, y: -2 }}
           whileTap={{ scale: 0.94 }}
-          className="fixed bottom-6 right-6 z-40 flex size-12 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-md transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="group fixed bottom-20 right-4 z-40 flex size-12 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-md transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:bottom-6 md:right-6"
         >
           {/* Status bar redonda (circular progress indicator) */}
           <svg
